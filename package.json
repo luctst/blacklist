@@ -1,0 +1,48 @@
+{
+	"private": true,
+	"name": "blacklist",
+	"version": "1.0.0",
+	"description": "A hidden connected secret list from everyone except you ⚫️ ⚫️",
+	"author": "Tostee Lucas",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://www.github.com/luctst/blacklist"
+	},
+	"bugs": {
+		"url": "https://www.github.com/luctst/blacklist/issues"
+	},
+	"homepage": "https://www.github.com/luctst/blacklist",
+	"engines": {
+		"node": ">= 10.0.0"
+	},
+	"ava": {
+		"cache": true
+	},
+	"scripts": {
+		"back": "nodemon",
+		"test": "ava --verbose ./test/*.js",
+		"test:watch": "ava --watch --verbose --fail-fast ./test/*.js",
+		"lint": "npx eslint --cache './lib/**/*.js'",
+		"lint:watch": "esw -w --clear --color --cache './server/**/*'",
+		"lint:fix": "npx eslint --fix './server/**/*'",
+		"style": "prettier -c './server/**/*'",
+		"style:fix": "prettier --c --write './server/**/*'"
+	},
+	"dependencies": {
+		"dotenv": "^8.2.0",
+		"mongodb": "^3.5.1",
+		"portfinder": "^1.0.25"
+	},
+	"devDependencies": {
+		"ava": "^3.0.0",
+		"eslint": "^6.8.0",
+		"eslint-config-airbnb-base": "^14.0.0",
+		"eslint-config-prettier": "^6.9.0",
+		"eslint-plugin-import": "^2.20.0",
+		"eslint-plugin-prettier": "^3.1.2",
+		"eslint-watch": "^6.0.1",
+		"nodemon": "^2.0.2",
+		"prettier": "^1.19.1"
+	}
+}
