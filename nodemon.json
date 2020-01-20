@@ -1,0 +1,8 @@
+{
+    "watch": [
+        "server",
+        ".env"
+    ],
+    "ext": "js,ts,json",
+    "exec": "node ./server/index.js"
+}
