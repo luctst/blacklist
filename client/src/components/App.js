@@ -5,6 +5,7 @@ import {
   Route,
   BrowserRouter
 } from "react-router-dom";
+import BlackList from './BlackList/BlackList';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route exact path="/" component={SpaceLog} />
           <Route exact path="/inscription" component={SpaceLog} />
         </div>
+        <Route exact path="/blacklist" component={BlackList} />
       </div>
     </BrowserRouter>
   );
