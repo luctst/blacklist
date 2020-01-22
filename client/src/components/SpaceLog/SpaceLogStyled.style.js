@@ -3,8 +3,8 @@ import styled from "styled-components";
 const SpaceLogStyled = styled.form`
   font-family: Roboto;
   margin-top: 8%;
-  margin-left: 40%;
-  margin-right: 40%;
+  margin-left: 38%;
+  margin-right: 38%;
     label {
       font-family: Gelasio;
       font-weight: bold;
