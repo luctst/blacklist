@@ -6,6 +6,17 @@ const SpaceLogStyled = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .form--connection--mail, .form--connection--password {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5%;
+  }
+  .form--connection--button {
+    input {
+      margin-bottom: 10px;
+    }
+  }
     label {
       font-family: Gelasio;
       font-weight: bold;
