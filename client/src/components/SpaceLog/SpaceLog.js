@@ -7,15 +7,15 @@ function SpaceLog(props) {
   return (
     <React.Fragment>
       <SpaceLogStyled className="container form--connection">
-        <div className="form--connection--mail form-group">
+        <div className="form--connection--mail">
           <label htmlFor="mail">Mail:</label>
-          <input type="email" id="mail" className="form-control" placeholder="name@example.com" required />
+          <input type="email" id="mail" placeholder="name@example.com" required />
         </div>
-        <div className="form--connection--password form-group">
+        <div className="form--connection--password">
           <label htmlFor="password">Password:</label>
-          <input type="password" id="password" className="form-control" name="password" required />
+          <input type="password" id="password" name="password" required />
         </div>
-        <div className="'form--connection--button form-group">
+        <div className="form--connection--button">
           <input type="submit" value="Submit"></input>
         </div>
         <div className="redirection--link">
