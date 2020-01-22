@@ -12,8 +12,6 @@ function App() {
     <BrowserRouter>
       <Title />
       <Route exact path={["/", "/inscription"]} component={SpaceLog} />
-      {/* <Route exact path="/" component={SpaceLog} />
-      <Route exact path="/inscription" component={SpaceLog} /> */}
       <Route exact path="/blacklist" component={BlackList} />
     </BrowserRouter>
   );
