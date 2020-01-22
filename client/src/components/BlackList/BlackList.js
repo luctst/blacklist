@@ -3,10 +3,7 @@ import BlackListStyled from "./BlackListStyled.style";
 
 function BlackList() {
   const inputNameValue = useRef(null);
-  const [data, setData] = useState({
-    name: "",
-    image: null
-  })
+  const [data, setData] = useState(["Cloé", "Amélie", "Jennifer", "Ophélie", "Fiona", "Dyson"])
 
   function addName(e) {
     const newState = {...data}
@@ -18,19 +15,18 @@ function BlackList() {
 
   return(
     <BlackListStyled className="container my--blacklist">
+      {
+        data.map(name => {
+          return(
+            <ul>
+              <li>{name}</li>
+            </ul>
+          )
+        })
+      }
       <div className="my--blacklist--form--name form-group">
-        <input type="text" id="inputName" className="form-control" placeholder="The secret identity" ref={inputNameValue} onKeyDown={addName} />
-        <label htmlFor="inputImg" className="form-control">The secret image</label>
-        <input type="file" id="inputImg" accept="image/png, image/jpeg" style={{display: "none"}}></input>
+        <input type="text" id="inputName" className="form-control" placeholder="+ The secret identity" ref={inputNameValue} onKeyDown={addName} />
       </div>
-      <ul>
-        <li>Cloé</li>
-        <li>Amélie</li>
-        <li>Jennifer</li>
-        <li>Ophélie</li>
-        <li>Fiona</li>
-        <li>Dyson</li>
-      </ul>
     </BlackListStyled>
   )
 }
