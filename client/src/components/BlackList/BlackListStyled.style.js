@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const BlackListStyled = styled.div`
+const BlackListStyled = styled.section`
   font-family: Roboto;
     label {
       font-family: Gelasio;
