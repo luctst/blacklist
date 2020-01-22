@@ -3,13 +3,13 @@ import BlackListStyled from "./BlackListStyled.style";
 
 function BlackList() {
   const inputNameValue = useRef(null);
-  const [data, setData] = useState(["Cloé", "Amélie", "Jennifer", "Ophélie", "Fiona", "Dyson"])
+  const [data, setData] = useState(["Cloé", "Amélie", "Jennifer", "Ophélie", "Fiona", "Dyson"]);
 
   function addName(e) {
-    const newState = [...data]
+    const newState = [...data];
     if (e.keyCode === 13) {
-      newState.name = inputNameValue.current.value;
-      setData(newState)
+      newState.push(inputNameValue.current.value);
+      setData(newState);
     }
   }
 
@@ -24,8 +24,8 @@ function BlackList() {
           })
         }
       </ul>
-      <div className="my--blacklist--form--name form-group">
-        <input type="text" id="inputName" className="form-control" placeholder="+ The secret identity" ref={inputNameValue} onKeyDown={addName} />
+      <div className="my--blacklist--form--name">
+        <input type="text" id="inputName" placeholder="+ New" ref={inputNameValue} onKeyDown={addName} />
       </div>
     </BlackListStyled>
   )
