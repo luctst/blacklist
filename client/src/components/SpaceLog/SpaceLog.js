@@ -6,20 +6,18 @@ function SpaceLog(props) {
 
   return (
     <React.Fragment>
-      <SpaceLogStyled className="form--connection">
-        <form>
-          <div className="form--connection--mail form-group">
-            <label htmlFor="mail">Mail:</label>
-            <input type="email" id="mail" className="form-control" placeholder="name@example.com" required />
-          </div>
-          <div className="form--connection--password form-group">
-            <label htmlFor="password" className="mr-4">Password:</label>
-            <input type="password" id="password" className="form-control" name="password" required />
-          </div>
-          <div className="'form--connection--button form-group">
-            <button className="btn btn-primary">Submit</button>
-          </div>
-        </form>
+      <SpaceLogStyled className="container form--connection">
+        <div className="form--connection--mail form-group">
+          <label htmlFor="mail">Mail:</label>
+          <input type="email" id="mail" className="form-control" placeholder="name@example.com" required />
+        </div>
+        <div className="form--connection--password form-group">
+          <label htmlFor="password" className="mr-4">Password:</label>
+          <input type="password" id="password" className="form-control" name="password" required />
+        </div>
+        <div className="'form--connection--button form-group">
+          <button className="btn btn-primary">Submit</button>
+        </div>
         <div className="redirection--link mt-3">
           {
             props.location.pathname === "/" ?
