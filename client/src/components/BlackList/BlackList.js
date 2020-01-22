@@ -1,32 +1,38 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import BlackListStyled from "./BlackListStyled.style";
 
 function BlackList() {
-  const inputNameValue = useRef(null);
-  const [data, setData] = useState(["Cloé", "Amélie", "Jennifer", "Ophélie", "Fiona", "Dyson"]);
+  const [data, setData] = useState(["empty"]);
+  // const [data, setData] = useState(["Cloé", "Amélie", "Jennifer", "Ophélie", "Fiona", "Dyson"]);
 
-  function addName(e) {
+  function addInput(e, index) {
     const newState = [...data];
+
     if (e.keyCode === 13) {
-      newState.push(inputNameValue.current.value);
+      newState.splice(index += 1, 0, "enter your name");
+      document.activeElement.blur();
       setData(newState);
     }
+
   }
 
   return (
     <BlackListStyled className="container my--blacklist">
-      <ul>
-        {
-          data.map((name, index) => {
-            return (
-              <li key={index}>{name}</li>
-            )
-          })
-        }
-      </ul>
-      <div className="my--blacklist--form--name">
-        <input type="text" id="inputName" placeholder="+ New" ref={inputNameValue} onKeyDown={addName} />
-      </div>
+      {
+        data.map((name, index) => {
+          return (
+            <div className="parent--div" key={index}>
+              <div className="parent--dot">
+                <span></span>
+              </div>
+              <div>
+                <div contentEditable="true" className="content--name" onKeyDown={(e) => addInput(e, index)}>{name}</div>
+              </div>
+              <div className="parent--div--close">x</div>
+            </div>
+          )
+        })
+      }
     </BlackListStyled>
   )
 }
