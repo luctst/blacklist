@@ -3,15 +3,15 @@ import styled from "styled-components";
 const SpaceLogStyled = styled.form`
   font-family: Roboto;
   margin-top: 8%;
-  margin-left: 38%;
-  margin-right: 38%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
     label {
       font-family: Gelasio;
       font-weight: bold;
     }
     input {
       background: #f5f6f7;
-      width: 30%;
       padding: 9px 15px;
       border-radius: 6px;
       border: none;
