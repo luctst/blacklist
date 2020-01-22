@@ -5,7 +5,7 @@ function Title() {
   return(
     <header>
       <TitleStyled className="header--title mt-5">
-        <h1>BlackList</h1>
+        BlackList
       </TitleStyled>
     </header>
   )
