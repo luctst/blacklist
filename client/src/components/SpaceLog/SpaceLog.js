@@ -12,13 +12,13 @@ function SpaceLog(props) {
           <input type="email" id="mail" className="form-control" placeholder="name@example.com" required />
         </div>
         <div className="form--connection--password form-group">
-          <label htmlFor="password" className="mr-4">Password:</label>
+          <label htmlFor="password">Password:</label>
           <input type="password" id="password" className="form-control" name="password" required />
         </div>
         <div className="'form--connection--button form-group">
           <button className="btn btn-primary">Submit</button>
         </div>
-        <div className="redirection--link mt-3">
+        <div className="redirection--link">
           {
             props.location.pathname === "/" ?
               <p>

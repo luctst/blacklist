@@ -17,10 +17,10 @@ function BlackList() {
   }
 
   return(
-    <BlackListStyled className="container my--blacklist mt-3">
+    <BlackListStyled className="container my--blacklist">
       <div className="my--blacklist--form--name form-group">
         <input type="text" id="inputName" className="form-control" placeholder="The secret identity" ref={inputNameValue} onKeyDown={addName} />
-        <label htmlFor="inputImg" className="form-control ml-3 mb-5">The secret image</label>
+        <label htmlFor="inputImg" className="form-control">The secret image</label>
         <input type="file" id="inputImg" accept="image/png, image/jpeg" style={{display: "none"}}></input>
       </div>
       <ul>

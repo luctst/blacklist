@@ -4,7 +4,7 @@ import TitleStyled from "./TitleStyled.style";
 function Title() {
   return(
     <header>
-      <TitleStyled className="header--title mt-5">
+      <TitleStyled className="header--title">
         BlackList
       </TitleStyled>
     </header>
