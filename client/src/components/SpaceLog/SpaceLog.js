@@ -16,7 +16,7 @@ function SpaceLog(props) {
           <input type="password" id="password" className="form-control" name="password" required />
         </div>
         <div className="'form--connection--button form-group">
-          <button className="btn btn-primary">Submit</button>
+          <input type="submit" value="Submit"></input>
         </div>
         <div className="redirection--link">
           {
