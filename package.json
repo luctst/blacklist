@@ -23,13 +23,14 @@
 		"back": "nodemon",
 		"test": "ava --verbose ./test/*.js",
 		"test:watch": "ava --watch --verbose --fail-fast ./test/*.js",
-		"lint": "npx eslint --cache './lib/**/*.js'",
+		"lint": "npx eslint --cache './server/**/*'",
 		"lint:watch": "esw -w --clear --color --cache './server/**/*'",
 		"lint:fix": "npx eslint --fix './server/**/*'",
 		"style": "prettier -c './server/**/*'",
 		"style:fix": "prettier --c --write './server/**/*'"
 	},
 	"dependencies": {
+		"body-parser": "^1.19.0",
 		"dotenv": "^8.2.0",
 		"mongodb": "^3.5.1",
 		"portfinder": "^1.0.25"
