@@ -1,2 +1,2 @@
-import test from "ava";
-test.todo("Implement test");
+const {todo} = require("ava");
+todo("Implement test");
