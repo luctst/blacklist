@@ -19,6 +19,7 @@ install:
 
 script:
 - npm test
+- node ./server/index.js
 - npm run lint
 - npm run style
 
