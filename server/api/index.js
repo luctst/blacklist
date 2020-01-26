@@ -1,5 +1,4 @@
 const { parse } = require("url");
-const {json} = require("body-parser");
 const responseHeader = require("../utils/response-header");
 
 module.exports = (req, res, routesApi) => {
@@ -33,30 +32,38 @@ module.exports = (req, res, routesApi) => {
 
     res.end(
       JSON.stringify({
-        status: 404,
-        message: `Not found, you can check this url to see all routes and methods availables, https://${process.env.url}.com`
+        status: "Not found",
+        message: `Check this url to see all routes and methods availables, https://${process.env.url}.com`
       })
     );
   }
 
   req.setEncoding("utf-8");
   req
-    .on("readable", function() {
-      if (this.read() !== null) {
-        const bodyparsed = json({type: "application/json"});
-        console.log(bodyparsed());
-      }
-    })
+    .on("data", chunk => (dataToCheck.body = chunk))
     .on("end", () => {
-      console.log(dataToCheck.body);
+      if (dataToCheck.body !== undefined) {
+        try {
+          const bodyParsed = JSON.parse(dataToCheck.body);
+          dataToCheck.body = bodyParsed;
+        } catch (e) {
+          responseHeader(res, true);
+
+          res.end(
+            JSON.stringify({
+              status: e.message,
+              message: "The routes can only receives JSON data."
+            })
+          );
+        }
+      }
+
+      reponseForClient =
+        pathname === "/"
+          ? require("./routes/default")({ ...dataToCheck })
+          : require(`./routes${pathname}`)({ ...dataToCheck });
+
+      reponseForClient.error ? responseHeader(res, true) : responseHeader(res);
+      res.end(JSON.stringify({ ...reponseForClient.data }));
     });
-
-  if (pathname === "/") {
-    reponseForClient = require("./routes/default")({ ...dataToCheck }); // eslint-disable-line global-require
-
-    reponseForClient.error ? responseHeader(res, true) : responseHeader(res);
-    res.end(JSON.stringify({ ...reponseForClient.data }));
-  } else {
-    reponseForClient = require(`./routes${pathname}`)({ ...dataToCheck }); // eslint-disable-line global-require
-  }
 };
