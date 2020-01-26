@@ -30,7 +30,6 @@
 		"style:fix": "prettier --c --write './server/**/*'"
 	},
 	"dependencies": {
-		"body-parser": "^1.19.0",
 		"dotenv": "^8.2.0",
 		"mongodb": "^3.5.1",
 		"portfinder": "^1.0.25"
