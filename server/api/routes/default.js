@@ -4,7 +4,7 @@ module.exports = request => {
       error: true,
       data: {
         status: "Not found",
-        message: `The / route can only ba access with a GET method, https://${process.env.url}/`
+        message: `The / route can only be access with a GET method, https://${process.env.url}/`
       }
     };
   }
@@ -14,7 +14,7 @@ module.exports = request => {
       error: true,
       data: {
         status: "Not found",
-        message: "The / route can not receives data."
+        message: "The / route can not receive data."
       }
     };
   }
