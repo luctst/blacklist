@@ -63,7 +63,9 @@ module.exports = (req, res, routesApi) => {
           ? require("./routes/default")({ ...dataToCheck })
           : require(`./routes${pathname}`)({ ...dataToCheck });
 
-      reponseForClient.error ? responseHeader(res, true) : responseHeader(res);
-      res.end(JSON.stringify({ ...reponseForClient.data }));
+      reponseForClient.then(r => {
+        r.error ? responseHeader(res, true) : responseHeader(res);
+        res.end(JSON.stringify({ ...r.data }));
+      });
     });
 };
