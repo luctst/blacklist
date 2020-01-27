@@ -41,6 +41,19 @@ const BlackListStyled = styled.section`
       display: block;
     }
   }
+
+  @media screen and (min-width: 768px) and (max-width: 1366px) {
+    .parent--div {
+      font-size: 2em;
+    }
+  }
+  @media screen and (min-width: 320px) and (max-width: 812px) {
+    .parent--div {
+      font-size: 1.6em;
+      margin-left: 20px;
+    }
+  }
+
 `
 
 export default BlackListStyled
