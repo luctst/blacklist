@@ -4,8 +4,9 @@ module.exports = request => {
   if (!["POST", "PUT", "DELETE"].includes(request.method)) {
     return Promise.resolve({
       error: true,
+      code: 405,
       data: {
-        status: "Not found",
+        status: "Method not allowed",
         message: "This route can only be access with POST, PUT, DELETE method."
       }
     });
@@ -14,8 +15,9 @@ module.exports = request => {
   if (!request.header.hasOwnProperty("authorization")) {
     return Promise.resolve({
       error: true,
+      code: 401,
       data: {
-        status: "Not found",
+        status: "Unauthorized",
         message: "You must add 'Authorization: Bearer <token>' header."
       }
     });
