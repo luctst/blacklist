@@ -28,7 +28,7 @@ module.exports = (req, res, routesApi) => {
     !routesApi.includes(pathname) ||
     ![...dataToCheck.globalMethods].includes(req.method)
   ) {
-    responseHeader(res, true);
+    responseHeader(res, true, 400);
 
     res.end(
       JSON.stringify({
@@ -47,7 +47,7 @@ module.exports = (req, res, routesApi) => {
           const bodyParsed = JSON.parse(dataToCheck.body);
           dataToCheck.body = bodyParsed;
         } catch (e) {
-          responseHeader(res, true);
+          responseHeader(res, true, 406);
 
           res.end(
             JSON.stringify({
@@ -64,7 +64,7 @@ module.exports = (req, res, routesApi) => {
           : require(`./routes${pathname}`)({ ...dataToCheck });
 
       reponseForClient.then(r => {
-        r.error ? responseHeader(res, true) : responseHeader(res);
+        r.error ? responseHeader(res, true, r.code) : responseHeader(res);
         res.end(JSON.stringify({ ...r.data }));
       });
     });
