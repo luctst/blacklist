@@ -1,28 +1,30 @@
 module.exports = request => {
   if (request.method !== "GET") {
-    return {
+    return Promise.resolve({
       error: true,
+      code: 405,
       data: {
-        status: "Not found",
+        status: "Method not allowed",
         message: `The / route can only be access with a GET method, https://${process.env.url}/`
       }
-    };
+    });
   }
 
   if (request.body !== undefined) {
-    return {
+    return Promise.resolve({
       error: true,
+      code: 400,
       data: {
-        status: "Not found",
+        status: "Request cannot receives data.",
         message: "The / route can not receive data."
       }
-    };
+    });
   }
 
-  return {
+  return Promise.resolve({
     data: {
       methods: [...request.globalMethods],
       routes: request.globalRoutes.map(route => `https://${process.env.url}${route}`)
     }
-  };
+  });
 };
