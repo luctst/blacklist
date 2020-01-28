@@ -2,8 +2,9 @@
  * Create the response header
  * @param {Object} reponse The reponse object return on http request.
  * @param {Boolean} error If true reponse should return an 404 header.
+ * @param {Number} code The status code to send in the response.
  */
-module.exports = (reponse, error = false) => {
+module.exports = (reponse, error = false, code) => {
   const defaultHeader = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Expose-Headers":
@@ -20,10 +21,10 @@ module.exports = (reponse, error = false) => {
   };
 
   if (error) {
-    return reponse.writeHead(404, {
+    return reponse.writeHead(code, {
       ...defaultHeader,
       "Transfer-Encoding": "chunked",
-      Status: "404 not found"
+      Status: code
     });
   }
 
