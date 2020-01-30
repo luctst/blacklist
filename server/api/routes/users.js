@@ -6,28 +6,29 @@ module.exports = request => {
       error: true,
       code: 405,
       data: {
-        status: "Method not allowed",
+        status: 405,
         message: "This route can only be access with POST, PUT, DELETE method."
       }
     });
   }
 
-  if (!request.header.hasOwnProperty("authorization")) {
-    return Promise.resolve({
-      error: true,
-      code: 401,
-      data: {
-        status: "Unauthorized",
-        message: "You must add 'Authorization: Bearer <token>' header."
-      }
-    });
-  }
+  // if (!request.header.hasOwnProperty("authorization")) {
+  //   return Promise.resolve({
+  //     error: true,
+  //     code: 401,
+  //     data: {
+  //       status: "Unauthorized",
+  //       message: "You must add 'Authorization: Bearer <token>' header."
+  //     }
+  //   });
+  // }
 
   if (request.body === undefined) {
     return Promise.resolve({
       error: true,
+      code: 400,
       data: {
-        status: "Not found",
+        status: "Empty body",
         message: "You must pass data."
       }
     });
@@ -35,7 +36,7 @@ module.exports = request => {
 
   switch (request.method) {
     case "POST":
-      return POST().then(res => res);
+      return POST({ ...request.body }).then(res => res);
     case "PUT":
       return PUT();
     case "DELETE":
