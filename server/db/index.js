@@ -9,5 +9,5 @@ const client = new MongoClient(uri, {
 
 module.exports = async () => {
   const connexion = await client.connect();
-  return connexion.db("web-timeline");
+  return await connexion.db("blacklist");
 };
