@@ -4,7 +4,7 @@ module.exports = request => {
       error: true,
       code: 405,
       data: {
-        status: "Method not allowed",
+        status: 405,
         message: `The / route can only be access with a GET method, https://${process.env.url}/`
       }
     });
@@ -15,7 +15,7 @@ module.exports = request => {
       error: true,
       code: 400,
       data: {
-        status: "Request cannot receives data.",
+        status: 400,
         message: "The / route can not receive data."
       }
     });
