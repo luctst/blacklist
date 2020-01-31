@@ -24,7 +24,20 @@ module.exports = request => {
   return Promise.resolve({
     data: {
       methods: [...request.globalMethods],
-      routes: request.globalRoutes.map(route => `https://${process.env.url}${route}`)
+      routes: {
+        "/": {
+          description: "Return all routes and method availables for this API.",
+          method: "GET"
+        },
+        "/users": {
+          description: "Create, update or delete an user.",
+          method: ["POST", "PUT", "DELETE"]
+        },
+        "/connexion": {
+          description: "",
+          method: "POST"
+        }
+      }
     }
   });
 };
