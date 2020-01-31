@@ -32,10 +32,10 @@ module.exports = request => {
         "/users": {
           description: "Create, update or delete an user.",
           method: ["POST", "PUT", "DELETE"],
-          POST: "This method create an user she must passed an JSON object in the body with a pseudo property, exemple: {'pseudo': string}."
+          POST: "This method create an user she must passed an JSON object in the body with a pseudo and pwsd property, exemple: {'pseudo': string, 'pswd': string}."
         },
         "/connexion": {
-          description: "",
+          description: "Use this route to connect an user.",
           method: "POST"
         }
       }
