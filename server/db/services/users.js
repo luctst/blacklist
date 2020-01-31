@@ -7,35 +7,35 @@ const db = require("../index");
 async function POST(body) {
   const b = Object.keys(body);
 
-  if (b.length !== 1) {
+  if (b.length !== 2) {
     return {
       error: true,
       code: 400,
       data: {
         status: 400,
-        message: "The body should only contains a pseudo property."
+        message: "The body should only contains pseudo and pswd property."
       }
     };
   }
 
-  if (b[0] !== "pseudo") {
+  if (b[0] !== "pseudo" || b[1] !== "pswd") {
     return {
       error: true,
       code: 400,
       data: {
         status: 400,
-        message: "Request body should have a pseudo property."
+        message: "Request body should have a pseudo and pswd property."
       }
     };
   }
 
-  if (typeof body.pseudo !== "string") {
+  if (typeof body.pseudo !== "string" || typeof body.pswd !== "string") {
     return {
       error: true,
       code: 400,
       data: {
         status: 400,
-        message: "Pseudo property should be a string."
+        message: "properties should be string."
       }
     };
   }
@@ -44,7 +44,7 @@ async function POST(body) {
   const r = await users.findOne({ ...body });
 
   if (r === null) {
-    await users.insertOne({ pseudo: body.pseudo });
+    await users.insertOne({ pseudo: body.pseudo, pswd: body.pswd });
 
     return {
       data: {
