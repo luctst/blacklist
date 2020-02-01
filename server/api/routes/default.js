@@ -17,7 +17,7 @@ module.exports = request => {
       code: 400,
       data: {
         status: 400,
-        message: "The / route can not receive data."
+        message: "The / route cannot receive data."
       }
     });
   }
@@ -25,22 +25,28 @@ module.exports = request => {
   return Promise.resolve({
     code: 200,
     data: {
-      methods: [...request.globalMethods],
-      routes: {
-        "/": {
-          description: "Return all routes and method availables for this API.",
-          method: "GET"
-        },
-        "/users": {
-          description: "Create, update or delete an user.",
-          method: ["POST", "PUT", "DELETE"],
-          POST:
-            "This method create an user she must passed an JSON object in the body with a pseudo and pwsd property, exemple: {'pseudo': string, 'pswd': string}."
-        },
-        "/connexion": {
-          description: "Use this route to connect an user.",
-          method: "POST"
-        }
+      "/": {
+        description: "Return all routes and method availables for this API.",
+        GET: "Return the API documentation."
+      },
+      "/users": {
+        description: "Create, update or delete an user.",
+        POST:
+          "This method create an user it must passed an JSON object in the body with a pseudo and pwsd property, exemple: {'pseudo': string, 'pswd': string}.",
+        PUT: "",
+        DELETE: ""
+      },
+      "/connexion": {
+        description: "Use this route to connect an user.",
+        POST:
+          "Check if an user exist in bdd, you must send a JSON object in the body request, exemple: {'pseudo': string, 'pswd': string}. Redirect to the /bl route and return a JWT token that will be used as a session validator"
+      },
+      "/bl": {
+        description: "Get acces to your secret data.",
+        GET: "Return your secret data",
+        POST: "",
+        PUT: "",
+        DELETE: ""
       }
     }
   });
