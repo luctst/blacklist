@@ -61,8 +61,10 @@ module.exports = (req, res, routesApi) => {
         pathname === "/"
           ? require("./routes/default")({ ...dataToCheck })
           : require(`./routes${pathname}`)({ ...dataToCheck });
-      
-      responseHeader(res, {...reponseForClient});
-      res.end(JSON.stringify({ ...reponseForClient.data }));
+
+      reponseForClient.then(r => {
+        responseHeader(res, {...r});
+        res.end(JSON.stringify({ ...r.data }));
+      })
     });
 };
