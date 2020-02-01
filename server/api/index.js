@@ -18,16 +18,14 @@ module.exports = (req, res, routesApi) => {
     header: req.headers,
     method: req.method,
     body: undefined,
-    query,
-    globalRoutes: routesApi,
-    globalMethods: ["GET", "POST", "PUT", "DELETE"]
+    query
   };
 
   if (
     !routesApi.includes(pathname) ||
-    ![...dataToCheck.globalMethods].includes(req.method)
+    !["GET", "POST", "PUT", "DELETE"].includes(req.method)
   ) {
-    responseHeader(res, {code: 400});
+    responseHeader(res, { code: 400 });
 
     res.end(
       JSON.stringify({
@@ -46,7 +44,7 @@ module.exports = (req, res, routesApi) => {
           const bodyParsed = JSON.parse(dataToCheck.body);
           dataToCheck.body = bodyParsed;
         } catch (e) {
-          responseHeader(res, {code: 406});
+          responseHeader(res, { code: 406 });
 
           res.end(
             JSON.stringify({
@@ -63,8 +61,8 @@ module.exports = (req, res, routesApi) => {
           : require(`./routes${pathname}`)({ ...dataToCheck });
 
       reponseForClient.then(r => {
-        responseHeader(res, {...r});
+        responseHeader(res, { ...r });
         res.end(JSON.stringify({ ...r.data }));
-      })
+      });
     });
 };
