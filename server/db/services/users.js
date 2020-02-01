@@ -9,7 +9,6 @@ async function POST(body) {
 
   if (b.length !== 2) {
     return {
-      error: true,
       code: 400,
       data: {
         status: 400,
@@ -20,7 +19,6 @@ async function POST(body) {
 
   if (b[0] !== "pseudo" || b[1] !== "pswd") {
     return {
-      error: true,
       code: 400,
       data: {
         status: 400,
@@ -31,7 +29,6 @@ async function POST(body) {
 
   if (typeof body.pseudo !== "string" || typeof body.pswd !== "string") {
     return {
-      error: true,
       code: 400,
       data: {
         status: 400,
@@ -47,15 +44,15 @@ async function POST(body) {
     await users.insertOne({ pseudo: body.pseudo, pswd: body.pswd });
 
     return {
+      code: 201,
       data: {
-        status: 200,
+        status: 201,
         message: "User created"
       }
     }
   }
 
   return {
-    error: true,
     code: 409,
     data: {
       status: 409,
