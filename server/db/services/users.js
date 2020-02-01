@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const db = require("../index");
 
 /**
@@ -41,7 +42,9 @@ async function POST(body) {
   const r = await users.findOne({ ...body });
 
   if (r === null) {
-    await users.insertOne({ pseudo: body.pseudo, pswd: body.pswd });
+    const passwordHash = await bcrypt.hash(body.pswd, 10);
+
+    await users.insertOne({ pseudo: body.pseudo, pswd: passwordHash });
 
     return {
       code: 201,
@@ -49,7 +52,7 @@ async function POST(body) {
         status: 201,
         message: "User created"
       }
-    }
+    };
   }
 
   return {
