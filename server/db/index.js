@@ -1,13 +1,8 @@
 const { MongoClient } = require("mongodb");
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_KEY}@web-timeline-dvcrh.mongodb.net/test?retryWrites=true&w=majority`;
-
-const client = new MongoClient(uri, {
+const client = new MongoClient(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
-module.exports = async () => {
-  const connexion = await client.connect();
-  return await connexion.db("blacklist");
-};
+module.exports = client;
