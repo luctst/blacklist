@@ -38,22 +38,29 @@ async function POST(body) {
     };
   }
 
-  const users = (await db()).collection("users");
-  const r = await users.findOne({ ...body });
+  const users = (await db.connect())
+    .db("blacklist")
+    .collection("users")
+    .findOne({ pseudo: body.pseudo });
 
-  if (r === null) {
+  if (users === null) {
     const passwordHash = await bcrypt.hash(body.pswd, 10);
-
     await users.insertOne({ pseudo: body.pseudo, pswd: passwordHash });
+    await db.close();
 
     return {
       code: 201,
+      serverHeader: {
+        Location: `https://${process.env.url}/blacklist`
+      },
       data: {
         status: 201,
         message: "User created"
       }
     };
   }
+
+  await db.close();
 
   return {
     code: 409,
