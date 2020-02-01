@@ -25,12 +25,12 @@ module.exports = (reponse, data) => {
       return reponse.writeHead(data.code, {
         ...defaultHeader,
         ...data.serverHeader
-      })
+      });
     }
 
     return reponse.writeHead(data.code, {
       ...defaultHeader,
-      "Transfer-Encoding": "chunked",
+      "Transfer-Encoding": "chunked"
     });
   }
 
