@@ -2,14 +2,16 @@ const { POST, PUT, DELETE } = require("../../db/services/users");
 
 module.exports = request => {
   if (!["POST", "PUT", "DELETE"].includes(request.method)) {
-    return Promise.resolve({
-      error: true,
+    return {
       code: 405,
+      serverHeader: {
+        Allow: "POST, PUT, DELETE"
+      },
       data: {
         status: 405,
         message: "This route can only be access with POST, PUT, DELETE method."
       }
-    });
+    };
   }
 
   // if (!request.header.hasOwnProperty("authorization")) {
@@ -24,14 +26,13 @@ module.exports = request => {
   // }
 
   if (request.body === undefined) {
-    return Promise.resolve({
-      error: true,
+    return {
       code: 400,
       data: {
         status: "Empty body",
         message: "You must pass data."
       }
-    });
+    };
   }
 
   switch (request.method) {
