@@ -1,6 +1,6 @@
 module.exports = request => {
   if (request.method !== "GET") {
-    return {
+    return Promise.resolve({
       code: 405,
       serverHeader: {
         Allow: "GET"
@@ -9,20 +9,20 @@ module.exports = request => {
         status: 405,
         message: `The / route can only be access with a GET method, https://${process.env.url}/`
       }
-    };
+    });
   }
 
   if (request.body !== undefined) {
-    return {
+    return Promise.resolve({
       code: 400,
       data: {
         status: 400,
         message: "The / route can not receive data."
       }
-    };
+    });
   }
 
-  return {
+  return Promise.resolve({
     code: 200,
     data: {
       methods: [...request.globalMethods],
@@ -43,5 +43,5 @@ module.exports = request => {
         }
       }
     }
-  };
+  });
 };
