@@ -26,6 +26,7 @@ const SpaceLogStyled = styled.form`
     padding: 9px 15px;
     border-radius: 6px;
     border: none;
+    margin-bottom: 30px;
   }
 `
 
