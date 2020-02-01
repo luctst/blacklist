@@ -11,27 +11,53 @@
 *A hidden connected secret list from everyone except you ⚫️ ⚫️*
 
 ## Install
-Explain to your users how they can install your product :)
+First install client and server dependencies.
+
+### Client
+```
+cd client/
+npm install
+```
+
+### Server
+```
+cd ..
+npm install
+```
+
+Once it's done you must create a `.env` files to keep your secrets variables, the first one is for the server at the root of your project and should contain this variable `DB_URL` ask me for authorization in order to get acces to database.
+
+```bash
+-- .github/
+-- client/
+-- server/
+-- .env
+```
+
+The second one should be in the client project, with your terminal go in the `client` folder and create another `.env` file, it should have those variables `REACT_APP_APIURLDEV = http://localhost:<server-port>, REACT_APP_APIURLPROD = "`.
+
+```bash
+-- client/
+    -- public/
+    -- src/
+    -- .env
+```
+
+> **Note** - You must have Nodejs >=10.0.0
 
 ## Usage
-In this section you can write some popular examples about how you can interact with the project. It's advisable to write some code here.
+One everything is done you can launch the server by running these command `npm run back`, it should start the nodejs process.
 
-## Features
-Display a list of features. you can also include the next features you're working on.
+You can now start the client side by running those commands:
 
-## Documentation
-If your project has some documentation you can link anything here.
+```
+cd client/
+npm start
+```
 
-## API
-You have a small project or you'll like to share the API of your project ? This is where it's happen.
-
-## Contributing
-If your project is open source you can indicate how the others can contribute.
-
-## Maintainers
-List of maintainers.
+If you had any troubles don't hesitate to create an issues, happy coding 👩‍💻🧑‍💻
 
 ## License
-Enter what kind of license you're using.
+MIT
 
 <p style="font-size:8px;text-align:center;margin-top:50px;">File generated with <a href="https://github.com/luctst/get-good-readme">get-good-readme</a> module.</p>
