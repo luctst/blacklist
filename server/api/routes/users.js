@@ -14,17 +14,6 @@ module.exports = request => {
     });
   }
 
-  // if (!request.header.hasOwnProperty("authorization")) {
-  //   return Promise.resolve({
-  //     error: true,
-  //     code: 401,
-  //     data: {
-  //       status: "Unauthorized",
-  //       message: "You must add 'Authorization: Bearer <token>' header."
-  //     }
-  //   });
-  // }
-
   if (request.body === undefined) {
     return Promise.resolve({
       code: 400,
