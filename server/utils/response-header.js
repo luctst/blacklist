@@ -11,7 +11,7 @@ module.exports = (reponse, data) => {
     "content-type": "application/json; charset=utf-8",
     connection: "close",
     "Content-Security-Policy": "default-src 'none'",
-    Server: `${process.env.url}.com`,
+    Server: "NodeJs",
     Status: data.code,
     "X-XSS-Protection": "1;mode=block",
     "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
@@ -37,6 +37,7 @@ module.exports = (reponse, data) => {
   // TODO: Fill the empty data.
   return reponse.writeHead(data.code, {
     ...defaultHeader,
+    ...data.serverHeader,
     "cache-control": "public, max-age=60, s-maxage=60",
     Etag: "",
     Vary: "accept",
