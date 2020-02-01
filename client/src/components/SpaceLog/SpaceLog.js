@@ -41,8 +41,6 @@ function SpaceLog(props) {
     }
   }
 
-  console.log(state);
-
   return (
     <React.Fragment>
       <SpaceLogStyled className="container form--connection" onSubmit={checkUser}>
