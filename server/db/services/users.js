@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const db = require("../index");
+const mongo = require("../index");
 
 /**
  * Create a new user
@@ -38,29 +38,26 @@ async function POST(body) {
     };
   }
 
-  const users = (await db.connect())
+  const blacklistUsers = (await mongo.connect())
     .db("blacklist")
-    .collection("users")
-    .findOne({ pseudo: body.pseudo });
+    .collection("users");
 
-  if (users === null) {
+  if (await blacklistUsers.findOne({pseudo: body.pseudo}) === null) {
     const passwordHash = await bcrypt.hash(body.pswd, 10);
-    await users.insertOne({ pseudo: body.pseudo, pswd: passwordHash });
-    await db.close();
+    const newUser = await blacklistUsers.insertOne({ pseudo: body.pseudo, pswd: passwordHash, data: [] });
 
     return {
       code: 201,
       serverHeader: {
-        Location: `https://${process.env.url}/blacklist`
+        Location: `http://${process.env.url}:3000/blacklist`
       },
       data: {
         status: 201,
-        message: "User created"
+        message: "User created",
+        userId: newUser.insertedId
       }
     };
   }
-
-  await db.close();
 
   return {
     code: 409,
