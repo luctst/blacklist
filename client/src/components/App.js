@@ -1,20 +1,18 @@
 import React from 'react';
-import Title from './Header/Title';
-import SpaceLog from "../components/SpaceLog/SpaceLog";
+import Header from './Header';
+import SpaceLog from "./SpaceLog";
 import {
   Route,
   BrowserRouter
 } from "react-router-dom";
-import BlackList from './BlackList/BlackList';
+import BlackList from './BlackList';
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
-      <Title />
+      <Header />
       <Route exact path={["/", "/inscription"]} component={SpaceLog} />
       <Route exact path="/blacklist" component={BlackList} />
     </BrowserRouter>
   );
 }
-
-export default App;
