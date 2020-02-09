@@ -13,6 +13,7 @@ module.exports = (reponse, data) => {
     "Content-Security-Policy": "default-src 'none'",
     Server: "NodeJs",
     Status: data.code,
+    Vary: "Origin",
     "X-XSS-Protection": "1;mode=block",
     "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
     "X-Content-Type-Options": "nosniff",
