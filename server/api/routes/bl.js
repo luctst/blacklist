@@ -1,4 +1,7 @@
+const {GET} = require("../../db/services/bl");
+
 module.exports = request => {
+  console.log(request);
   if (!["GET", "POST", "PUT", "DELETE"].includes(request.method)) {
     return Promise.resolve({
       code: 405,
@@ -20,5 +23,12 @@ module.exports = request => {
         message: "You must add 'Authorization: Bearer <token>' header."
       }
     });
+  }
+
+  switch (request.method) {
+    case "GET":
+      return GET({...request.header}).then(res => res);
+    default:
+      break;
   }
 };
