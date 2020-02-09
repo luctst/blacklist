@@ -1,5 +1,75 @@
 const bcrypt = require("bcrypt");
 const mongo = require("../index");
+const {promisify} = require("util");
+const {randomFill} = require("crypto");
+const {ObjectId} = require("mongodb");
+
+const createToken = promisify(randomFill);
+
+/**
+ * Check if an user exist.
+ * @param {Object} query An object of parsed parameters.
+ */
+async function GET (query) {
+  const q = Object.keys(query);
+
+  if (q.length !== 2) {
+    return {
+      code: 400,
+      data: {
+        status: 400,
+        message: "You can only have two parameters."
+      }
+    }
+  }
+
+  if (q[0] !== "_id" || q[1] !== "_pseudo") {
+    return {
+      code: 400,
+      data: {
+        status: 400,
+        message: "Wrong parameter."
+      }
+    };
+  }
+
+  if (!ObjectId.isValid(query._id)) {
+    return {
+      code: 400,
+      data: {
+        code: 400,
+        message: "Error wrong data."
+      }
+    }
+  }
+
+  const blacklistUsers = (await mongo.connect())
+    .db("blacklist")
+    .collection("users");
+  const user = await blacklistUsers.findOne({ '_id': ObjectId(query._id), 'pseudo': query._pseudo });
+
+  if (user === null) {
+    return {
+      code: 403,
+      data: {
+        status: 403,
+        message: "User don't exist"
+      }
+    }
+  }
+
+  return {
+    code: 200,
+    serverHeader: {
+      "Set-Cookie": `token=${user._token}; Max-age=20; Path=/; HttpOnly; Secure`
+    },
+    data: {
+      status: 200,
+      token: user._token,
+      user: user.pseudo
+    }
+  }
+}
 
 /**
  * Create a new user
@@ -43,17 +113,23 @@ async function POST(body) {
     .collection("users");
 
   if (await blacklistUsers.findOne({pseudo: body.pseudo}) === null) {
+    let _token = await createToken(Buffer.alloc(16));
     const passwordHash = await bcrypt.hash(body.pswd, 10);
-    const newUser = await blacklistUsers.insertOne({ pseudo: body.pseudo, pswd: passwordHash, data: [] });
+    const newUser = await blacklistUsers.insertOne({ 
+      pseudo: body.pseudo, 
+      pswd: passwordHash, 
+      data: [], 
+      _token: _token.toString("hex"),
+    });
 
     return {
       code: 201,
       serverHeader: {
-        Location: `http://${process.env.url}:3000/blacklist`
+        Location: `http://${process.env.url}:3000/bl/${newUser.ops[0].pseudo}`
       },
       data: {
         status: 201,
-        message: "User created",
+        url: `/bl/${newUser.ops[0].pseudo}`,
         userId: newUser.insertedId
       }
     };
@@ -72,6 +148,7 @@ function PUT() {}
 function DELETE() {}
 
 module.exports = {
+  GET,
   POST,
   PUT,
   DELETE
