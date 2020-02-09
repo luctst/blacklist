@@ -1,7 +1,7 @@
-const { POST, PUT, DELETE } = require("../../db/services/users");
+const { GET, POST, PUT, DELETE } = require("../../db/services/users");
 
 module.exports = request => {
-  if (!["POST", "PUT", "DELETE"].includes(request.method)) {
+  if (!["GET", "POST", "PUT", "DELETE"].includes(request.method)) {
     return Promise.resolve({
       code: 405,
       serverHeader: {
@@ -14,7 +14,7 @@ module.exports = request => {
     });
   }
 
-  if (request.body === undefined) {
+  if (request.body === undefined && request.method !== "GET") {
     return Promise.resolve({
       code: 400,
       data: {
@@ -25,6 +25,8 @@ module.exports = request => {
   }
 
   switch (request.method) {
+    case "GET":
+      return GET({...request.query}).then(res => res)
     case "POST":
       return POST({ ...request.body }).then(res => res);
     case "PUT":
