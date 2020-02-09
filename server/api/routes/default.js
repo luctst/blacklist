@@ -31,19 +31,15 @@ module.exports = request => {
       },
       "/users": {
         description: "Create, update or delete an user.",
+        GET: "Check if a specific user exist should, parameters '_id=integer&_pseudo=string'",
         POST:
           "This method create an user it must passed an JSON object in the body with a pseudo and pwsd property, exemple: {'pseudo': string, 'pswd': string}.",
         PUT: "",
         DELETE: ""
       },
-      "/connexion": {
-        description: "Use this route to connect an user.",
-        POST:
-          "Check if an user exist in bdd, you must send a JSON object in the body request, exemple: {'pseudo': string, 'pswd': string}. Redirect to the /bl route and return a JWT token that will be used as a session validator"
-      },
       "/bl": {
         description: "Get acces to your secret data.",
-        GET: "Return your secret data",
+        GET: "",
         POST: "",
         PUT: "",
         DELETE: ""
