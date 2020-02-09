@@ -1,4 +1,4 @@
-const {GET} = require("../../db/services/bl");
+const { GET } = require("../../db/services/bl");
 
 module.exports = request => {
   console.log(request);
@@ -27,7 +27,7 @@ module.exports = request => {
 
   switch (request.method) {
     case "GET":
-      return GET({...request.header}).then(res => res);
+      return GET({ ...request.header }).then(res => res);
     default:
       break;
   }
