@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
+const { promisify } = require("util");
+const { randomFill } = require("crypto");
+const { ObjectId } = require("mongodb");
 const mongo = require("../index");
-const {promisify} = require("util");
-const {randomFill} = require("crypto");
-const {ObjectId} = require("mongodb");
 
 const createToken = promisify(randomFill);
 
@@ -10,7 +10,7 @@ const createToken = promisify(randomFill);
  * Check if an user exist.
  * @param {Object} query An object of parsed parameters.
  */
-async function GET (query) {
+async function GET(query) {
   const q = Object.keys(query);
 
   if (q.length !== 2) {
@@ -20,7 +20,7 @@ async function GET (query) {
         status: 400,
         message: "You can only have two parameters."
       }
-    }
+    };
   }
 
   if (q[0] !== "_id" || q[1] !== "_pseudo") {
@@ -40,13 +40,14 @@ async function GET (query) {
         code: 400,
         message: "Error wrong data."
       }
-    }
+    };
   }
 
-  const blacklistUsers = (await mongo.connect())
-    .db("blacklist")
-    .collection("users");
-  const user = await blacklistUsers.findOne({ '_id': ObjectId(query._id), 'pseudo': query._pseudo });
+  const blacklistUsers = (await mongo.connect()).db("blacklist").collection("users");
+  const user = await blacklistUsers.findOne({
+    _id: ObjectId(query._id),
+    pseudo: query._pseudo
+  });
 
   if (user === null) {
     return {
@@ -55,7 +56,7 @@ async function GET (query) {
         status: 403,
         message: "User don't exist"
       }
-    }
+    };
   }
 
   return {
@@ -68,7 +69,7 @@ async function GET (query) {
       token: user._token,
       user: user.pseudo
     }
-  }
+  };
 }
 
 /**
@@ -108,18 +109,16 @@ async function POST(body) {
     };
   }
 
-  const blacklistUsers = (await mongo.connect())
-    .db("blacklist")
-    .collection("users");
+  const blacklistUsers = (await mongo.connect()).db("blacklist").collection("users");
 
-  if (await blacklistUsers.findOne({pseudo: body.pseudo}) === null) {
-    let _token = await createToken(Buffer.alloc(16));
+  if ((await blacklistUsers.findOne({ pseudo: body.pseudo })) === null) {
+    const _token = await createToken(Buffer.alloc(16));
     const passwordHash = await bcrypt.hash(body.pswd, 10);
-    const newUser = await blacklistUsers.insertOne({ 
-      pseudo: body.pseudo, 
-      pswd: passwordHash, 
-      data: [], 
-      _token: _token.toString("hex"),
+    const newUser = await blacklistUsers.insertOne({
+      pseudo: body.pseudo,
+      pswd: passwordHash,
+      data: [],
+      _token: _token.toString("hex")
     });
 
     return {

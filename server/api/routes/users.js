@@ -26,7 +26,7 @@ module.exports = request => {
 
   switch (request.method) {
     case "GET":
-      return GET({...request.query}).then(res => res)
+      return GET({ ...request.query }).then(res => res);
     case "POST":
       return POST({ ...request.body }).then(res => res);
     case "PUT":
