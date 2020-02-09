@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const SpaceLogStyled = styled.form`
   font-family: Roboto;
@@ -36,7 +36,9 @@ export default function SpaceLog(props) {
   const input = React.useRef(null);
   const inputPassword = React.useRef(null);
   const [state, setState] = React.useState({
-    serverMessage: ""
+    serverMessage: "",
+    redirect: false,
+    urlToRedirect: ""
   });
 
   const checkUser = e => {
@@ -58,11 +60,23 @@ export default function SpaceLog(props) {
         .then(data => {
           const newState = { ...state };
 
+          if (data.status === 201) {
+            sessionStorage.setItem("userId", data.userId);
+
+            newState.redirect = true;
+            newState.urlToRedirect = data.url;
+
+            return setState(newState);
+          }
+
           newState.serverMessage = data.message;
           return setState(newState);
         })
+    } else {
     }
   }
+
+  if (state.redirect) return <Redirect from={props.location.pathname}  to={state.urlToRedirect}/>;
 
   return (
     <SpaceLogStyled className="container form--connection" onSubmit={checkUser}>
