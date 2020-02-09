@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import React, { useState } from "react";
+import {sign} from "jsonwebtoken";
+import {withRouter, Redirect} from "react-router-dom";
 
 const BlackListStyled = styled.section`
   font-family: Roboto;
@@ -56,9 +58,33 @@ const BlackListStyled = styled.section`
   }
 `
 
-export default function BlackList() {
-  const [data, setData] = useState(["empty"]);
-  // const [data, setData] = useState(["Cloé", "Amélie", "Jennifer", "Ophélie", "Fiona", "Dyson"]);
+function BlackList(props) {
+  const url = process.env.NODE_ENV === "development" ? process.env.REACT_APP_APIURLDEV : "";
+  const [data, setData] = useState([]);
+  const [redirect, setRedirect] = useState({
+    shouldRedirect: false
+  })
+
+  React.useEffect(() => {
+    fetch(`${url}/users?_id=${sessionStorage.userId}&_pseudo=${props.match.params.pseudo}`)
+    .then(res => res.json())
+    .then(resParsed => {
+      if (resParsed.status !== 200) {
+        sessionStorage.clear();
+
+        return setRedirect({
+          ...redirect,
+          shouldRedirect: true
+        })
+      };
+
+      return fetch(`${url}/bl`, {
+        credentials: "include",
+        headers: new Headers().append("Authorization", `Bearer`)
+        }
+      );
+    });
+  }, []);
 
   function addInput(e, index) {
     const newState = [...data];
@@ -77,10 +103,14 @@ export default function BlackList() {
     setData(newState);
   }
 
+  if (redirect.shouldRedirect) return <Redirect from={props.location.path} to="/"/>
+
   return (
     <BlackListStyled className="container my--blacklist">
       {
-        data.map((name, index) => {
+        data.length === 0 ?
+          "Retrieve data.."
+        :data.map((name, index) => {
           return (
             <div className="parent--div" key={index}>
               <div className="parent--dot">
@@ -89,7 +119,7 @@ export default function BlackList() {
               <div>
                 <div contentEditable="true" className="content--name" onKeyDown={(e) => addInput(e, index)}>{name}</div>
               </div>
-              <div className="parent--div--close" onClick={() => deleteName(index)}><i class="fas fa-times"></i></div>
+              <div className="parent--div--close" onClick={() => deleteName(index)}><i className="fas fa-times"></i></div>
             </div>
           )
         })
@@ -97,3 +127,5 @@ export default function BlackList() {
     </BlackListStyled>
   )
 }
+
+export default withRouter(BlackList)
