@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import React, { useState } from "react";
-import {sign} from "jsonwebtoken";
 import {withRouter, Redirect} from "react-router-dom";
 
 const BlackListStyled = styled.section`
@@ -61,9 +60,7 @@ const BlackListStyled = styled.section`
 function BlackList(props) {
   const url = process.env.NODE_ENV === "development" ? process.env.REACT_APP_APIURLDEV : "";
   const [data, setData] = useState([]);
-  const [redirect, setRedirect] = useState({
-    shouldRedirect: false
-  })
+  const [redirect, setRedirect] = useState(false)
 
   React.useEffect(() => {
     fetch(`${url}/users?_id=${sessionStorage.userId}&_pseudo=${props.match.params.pseudo}`)
@@ -72,10 +69,7 @@ function BlackList(props) {
       if (resParsed.status !== 200) {
         sessionStorage.clear();
 
-        return setRedirect({
-          ...redirect,
-          shouldRedirect: true
-        })
+        return setRedirect(true)
       };
 
       return fetch(`${url}/bl`, {
