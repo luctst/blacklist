@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './Header';
+import Headerstyle from "../styles/Header.style"
 import SpaceLog from "./SpaceLog";
 import {
   Route,
@@ -13,11 +13,13 @@ import NotFound from "./NotFound";
 export default function App() {
   return (
     <BrowserRouter>
-      <Header />
+      <Headerstyle>
+        <h1 className="header--title">BlackList</h1>
+      </Headerstyle>
       <Switch>
         <Route exact path={["/", "/inscription"]} component={SpaceLog} />
-        <Route exact path="/bl/:pseudo" render={() => {
-          if (sessionStorage.getItem("userId")) return <BlackList />
+        <Route exact path="/bl/:pseudo" render={routeProps => {
+          if (sessionStorage.getItem("userId")) return <BlackList {...routeProps}/>
           return <Redirect to="/"/>
         }} />
         <Route path="*" component={NotFound}/>
