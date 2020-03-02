@@ -1,83 +1,19 @@
-import styled from "styled-components";
-import React, { useState } from "react";
-import {withRouter, Redirect} from "react-router-dom";
-
-const BlackListStyled = styled.section`
-  font-family: Roboto;
-  .parent--div {
-    position: relative;
-    display: flex;
-    align-items: center;
-    flex: auto;
-
-    .parent--dot {
-      margin-right: 4px;
-      width: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-grow: 0;
-      flex-shrink: 0;
-      min-height: calc(1.5em + 3px + 3px);
-      padding-right: 2px;
-
-        span {
-          width: 6px;
-          height: 6px;
-          border-radius: 6px;
-          background: currentcolor;
-          margin-top: 0.1em;
-        }
-      }
-    .content--name:focus {
-      outline: none;
-    }
-
-    .parent--div--close {
-      position: absolute;
-      left: -12px;
-      display: none;
-    }
-
-    :hover > .parent--div--close {
-      display: block;
-    }
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1366px) {
-    .parent--div {
-      font-size: 2em;
-    }
-  }
-  @media screen and (min-width: 320px) and (max-width: 812px) {
-    .parent--div {
-      font-size: 1.6em;
-      margin-left: 20px;
-    }
-  }
-`
+import BlackListstyle from "../styles/Blacklist.style"
+import talkToApi from "../utils/talkToApi"
+import React from "react";
+import {Redirect} from "react-router-dom";
 
 function BlackList(props) {
-  const url = process.env.NODE_ENV === "development" ? process.env.REACT_APP_APIURLDEV : "";
-  const [data, setData] = useState([]);
-  const [redirect, setRedirect] = useState(false)
+  const [data, setData] = React.useState([]);
+  const [redirect, setRedirect] = React.useState(false)
 
   React.useEffect(() => {
-    fetch(`${url}/users?_id=${sessionStorage.userId}&_pseudo=${props.match.params.pseudo}`)
-    .then(res => res.json())
-    .then(resParsed => {
-      if (resParsed.status !== 200) {
+    talkToApi(`/users?_id=${sessionStorage.userId}&_pseudo=${props.match.params.pseudo}`).then(result => {
+      if (result.status !== 200) {
         sessionStorage.clear();
-
-        return setRedirect(true)
-      };
-
-      return fetch(`${url}/bl`, {
-        credentials: "include",
-        headers: new Headers().append("Authorization", `Bearer`)
-        }
-      );
-    });
+        return setRedirect(true);
+      }
+    })
   }, []);
 
   function addInput(e, index) {
@@ -97,10 +33,10 @@ function BlackList(props) {
     setData(newState);
   }
 
-  if (redirect.shouldRedirect) return <Redirect from={props.location.path} to="/"/>
+  if (redirect) return <Redirect from={props.location.path} to="/"/>
 
   return (
-    <BlackListStyled className="container my--blacklist">
+    <BlackListstyle className="container my--blacklist">
       {
         data.length === 0 ?
           "Retrieve data.."
@@ -118,8 +54,8 @@ function BlackList(props) {
           )
         })
       }
-    </BlackListStyled>
+    </BlackListstyle>
   )
 }
 
-export default withRouter(BlackList)
+export default BlackList
