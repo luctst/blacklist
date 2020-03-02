@@ -1,38 +1,9 @@
-import styled from "styled-components";
+import SpaceLogstyle from "../styles/SpaceLog.style"
+import talkToApi from "../utils/talkToApi"
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 
-const SpaceLogStyled = styled.form`
-  font-family: Roboto;
-  margin-top: 8%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .form--connection--mail {
-    display: flex;
-    flex-direction: column;
-  }
-  .form--connection--button {
-    input {
-      margin-bottom: 10px;
-    }
-  }
-  label {
-    font-family: Gelasio;
-    font-weight: bold;
-  }
-  input {
-    background: #f5f6f7;
-    padding: 9px 15px;
-    border-radius: 6px;
-    border: none;
-    margin-bottom: 30px;
-  }
-`
-
 export default function SpaceLog(props) {
-  const url = process.env.NODE_ENV === "development" ? process.env.REACT_APP_APIURLDEV : "";
   const input = React.useRef(null);
   const inputPassword = React.useRef(null);
   const [state, setState] = React.useState({
@@ -52,34 +23,37 @@ export default function SpaceLog(props) {
     }
 
     if (props.location.pathname === "/inscription") {
-      fetch(`${url}/users`, {
-        method: "post",
-        body: JSON.stringify({ pseudo: input.current.value, pswd: inputPassword.current.value })
-      })
-        .then(res => res.json())
-        .then(data => {
-          const newState = { ...state };
+      talkToApi('/users', "post", {
+        body: {
+          pseudo: input.current.value,
+          pswd: inputPassword.current.value
+        }
+      }).then(result => {
+        const newState = { ...state };
 
-          if (data.status === 201) {
-            sessionStorage.setItem("userId", data.userId);
+        if (result.status === 201) {
+          sessionStorage.setItem("userId", result.userId);
 
-            newState.redirect = true;
-            newState.urlToRedirect = data.url;
+          newState.redirect = true;
+          newState.urlToRedirect = result.url;
 
-            return setState(newState);
-          }
-
-          newState.serverMessage = data.message;
           return setState(newState);
-        })
+        }
+
+        newState.serverMessage = result.message;
+        return setState(newState);
+      })
     } else {
+      talkToApi(`/users?_id=${input.current.value}&_pseudo=${inputPassword.current.value}`).then(result => {
+        console.log(result)
+      })
     }
   }
 
   if (state.redirect) return <Redirect from={props.location.pathname}  to={state.urlToRedirect}/>;
 
   return (
-    <SpaceLogStyled className="container form--connection" onSubmit={checkUser}>
+    <SpaceLogstyle className="container form--connection" onSubmit={checkUser}>
       <div className="form--connection--mail">
         <label htmlFor="pseudo">Pseudo:</label>
         <input type="text" id="pseudo" placeholder="heuss-l'enfoire" ref={input} />
@@ -103,6 +77,6 @@ export default function SpaceLog(props) {
             </p>
         }
       </div>
-    </SpaceLogStyled>
+    </SpaceLogstyle>
   )
 }
