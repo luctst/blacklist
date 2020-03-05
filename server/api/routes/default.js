@@ -32,15 +32,15 @@ module.exports = request => {
       "/users": {
         description: "Create, update or delete an user.",
         GET:
-          "Check if a specific user exist should, parameters '_id=integer&_pseudo=string'",
+          "/users/:user Check if a specific user exist should passed JSON object {{'pseudo': string, 'pswd': string}}",
         POST:
           "This method create an user it must passed an JSON object in the body with a pseudo and pwsd property, exemple: {'pseudo': string, 'pswd': string}.",
         PUT: "",
         DELETE: ""
       },
       "/bl": {
-        description: "Get acces to your secret data.",
-        GET: "",
+        description: "Get acces to your secret data, all endpoints here must include the Authorization header, exemple: Authorization: Bearer <token>",
+        GET: "Get data for a specific user, /bl/:user",
         POST: "",
         PUT: "",
         DELETE: ""
