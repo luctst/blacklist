@@ -39,7 +39,8 @@ module.exports = request => {
         DELETE: ""
       },
       "/bl": {
-        description: "Get acces to your secret data, all endpoints here must include the Authorization header, exemple: Authorization: Bearer <token>",
+        description:
+          "Get acces to your secret data, all endpoints here must include the Authorization header, exemple: Authorization: Bearer <token>",
         GET: "Get data for a specific user, /bl/:user",
         POST: "",
         PUT: "",
