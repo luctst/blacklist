@@ -4,9 +4,6 @@
             "NODEJS_HELPERS": "0"
         }
     },
-    "scripts": {
-        "now-build": "node ./server/index.js"
-    },
     "routes": [
         {
             "src": "/api/(.*)",

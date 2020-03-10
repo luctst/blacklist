@@ -27,7 +27,8 @@
 		"lint:watch": "esw -w --clear --color --cache './server/**/*'",
 		"lint:fix": "npx eslint --fix './server/**/*'",
 		"style": "prettier -c './server/**/*'",
-		"style:fix": "prettier --c --write './server/**/*'"
+		"style:fix": "prettier --c --write './server/**/*'",
+		"now-build": "node ./server/index.js"
 	},
 	"dependencies": {
 		"bcrypt": "^3.0.7",
