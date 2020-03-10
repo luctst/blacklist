@@ -1,0 +1,10 @@
+{
+    "build": {
+        "env": {
+            "NODEJS_HELPERS": "0"
+        }
+    },
+    "scripts": {
+        "now-build": "node ./server/index.js"
+    }
+}
