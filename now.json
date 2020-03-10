@@ -6,5 +6,11 @@
     },
     "scripts": {
         "now-build": "node ./server/index.js"
-    }
+    },
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "./index.js"
+        }
+    ]
 }
