@@ -10,8 +10,7 @@
 		"cache": true
 	},
 	"scripts": {
-		"start:back": "now dev",
-		"start:front": "react-scripts start",
+		"start": "now dev",
 		"build": "react-scripts build",
 		"lint": "npx eslint --cache './api/**/*'",
 		"lint:watch": "esw -w --clear --color --cache './api/**/*'",
