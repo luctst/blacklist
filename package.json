@@ -2,17 +2,7 @@
 	"private": true,
 	"name": "blacklist",
 	"version": "1.0.0",
-	"description": "A hidden connected secret list from everyone except you ⚫️ ⚫️",
-	"author": "Tostee Lucas",
 	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://www.github.com/luctst/blacklist"
-	},
-	"bugs": {
-		"url": "https://www.github.com/luctst/blacklist/issues"
-	},
-	"homepage": "https://www.github.com/luctst/blacklist",
 	"engines": {
 		"node": ">= 10.0.0"
 	},
@@ -20,32 +10,51 @@
 		"cache": true
 	},
 	"scripts": {
-		"back": "nodemon",
-		"test": "ava --verbose ./test/*.js",
-		"test:watch": "ava --watch --verbose --fail-fast ./test/*.js",
-		"lint": "npx eslint --cache './server/**/*'",
-		"lint:watch": "esw -w --clear --color --cache './server/**/*'",
-		"lint:fix": "npx eslint --fix './server/**/*'",
-		"style": "prettier -c './server/**/*'",
-		"style:fix": "prettier --c --write './server/**/*'",
-		"now-build": "node ./server/index.js"
+		"start:back": "now dev",
+		"start:front": "react-scripts start",
+		"build": "react-scripts build",
+		"lint": "npx eslint --cache './api/**/*'",
+		"lint:watch": "esw -w --clear --color --cache './api/**/*'",
+		"lint:fix": "npx eslint --fix './api/**/*'",
+		"style": "prettier -c './src/**/*' && prettier -c './api/**/*'",
+		"style:fix": "prettier --c --write './src/**/*' && prettier -c './api/**/*'"
 	},
-	"dependencies": {
-		"bcrypt": "^3.0.7",
-		"dotenv": "^8.2.0",
-		"jsonwebtoken": "^8.5.1",
-		"mongodb": "^3.5.1",
-		"portfinder": "^1.0.25"
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
 	},
 	"devDependencies": {
+		"@testing-library/react": "^9.3.2",
+		"@testing-library/user-event": "^7.1.2",
 		"ava": "^3.0.0",
 		"eslint": "^6.8.0",
 		"eslint-config-airbnb-base": "^14.0.0",
 		"eslint-config-prettier": "^6.9.0",
-		"eslint-plugin-import": "^2.20.0",
 		"eslint-plugin-prettier": "^3.1.2",
 		"eslint-watch": "^6.0.1",
-		"nodemon": "^2.0.2",
-		"prettier": "^1.19.1"
+		"husky": "^4.2.3",
+		"now": "^17.0.4",
+		"prettier": "^1.19.1",
+		"react-scripts": "3.4.0"
+	},
+	"dependencies": {
+		"@testing-library/jest-dom": "^4.2.4",
+		"bcrypt": "^4.0.1",
+		"dotenv": "^8.2.0",
+		"jsonwebtoken": "^8.5.1",
+		"mongodb": "^3.5.5",
+		"nodemailer": "^6.4.6",
+		"react": "^16.13.0",
+		"react-dom": "^16.13.0",
+		"react-router-dom": "^5.1.2",
+		"styled-components": "^5.0.1"
 	}
 }

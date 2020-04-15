@@ -1,13 +1,14 @@
 {
-    "build": {
-        "env": {
-            "NODEJS_HELPERS": "0"
-        }
+    "version": 2,
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "env": {
+        "DB_URL": "@mongo"
     },
-    "routes": [
+    "rewrites": [
         {
-            "src": "/api/(.*)",
-            "dest": "./server/index.js"
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ]
 }
